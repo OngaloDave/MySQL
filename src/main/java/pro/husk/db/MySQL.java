@@ -1,4 +1,4 @@
-package pro.husk.mysql;
+package pro.husk.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

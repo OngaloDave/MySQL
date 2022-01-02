@@ -23,7 +23,7 @@ To integrate this library in your project using maven, add these to your pom.xml
 <dependency>
     <groupId>pro.husk</groupId>
     <artifactId>mysql</artifactId>
-    <version>1.4.2</version>
+    <version>VERSION</version>
 </dependency>
 ```          
 
@@ -40,31 +40,10 @@ maven {
 And add this to dependencies
 
 ```kotlin
-implementation("pro.husk:mysql:1.4.1")
+implementation("pro.husk:mysql:VERSION")
 ```
 
-#### Note: it is assumed that mysql-connector-java is provided
-
-If it is not, please also add
-
-For Maven
-
-```xml
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>VERSION</version>
-</dependency>
-```             
-
-or for Gradle
-
-```kotlin
-implementation("mysql:mysql-connector-java:VERSION")
-```
-
-Versions can be found [here](https://mvnrepository.com/artifact/mysql/mysql-connector-java)
+#### Note: it is assumed that your binary provides the relevant database connector library. [See here](https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names)
 
 #### What if I don't use a build tool
 
@@ -76,9 +55,9 @@ the files in your project workspace!
 
 ### Create the database
 
-```Java
+```
 // Create instance
-MySQL mysql=new MySQL(url,username,password);
+MySQL mysql = new MySQL(url, username, password);
 ```
 
 ### Query
@@ -89,25 +68,25 @@ If we are just processing data, we can do it this way (so we don't have to clean
 
 #### Sync query
 
-```Java
+```
 // Execute query
-mysql.query("SELECT * from table WHERE id = 1;",results->{
-        if(results!=null){
-        // do something
+mysql.query("SELECT * from table WHERE id = 1;", results -> {
+        if (results != null) {
+            // do something
         }
         });
 ```            
 
 ...or you can get the ResultSet itself through
 
-```Java
-    try(ResultSet results=mysql.query(query)){
+```
+    try (ResultSet results = mysql.query(query)) {
         // Do something with the ResultSet
 
         // Then close statement (the ResultSet will close itself)
         results.getStatement().close();
-        }catch(SQLException e){
-        e.printStackTrace();
+        } catch (SQLException e) {
+           e.printStackTrace();
         }
 ```
 
@@ -118,7 +97,7 @@ Please make sure you close resources, or you'll end up with a memory leak! D:
 #### Sync update
 
 ```Java
-int resultCode=mysql.update("INSERT INTO `whitelist` (`uuid`, `date_added`) VALUES ('"+uuid+"', CURRENT_DATE());")
+int resultCode = mysql.update("INSERT INTO `whitelist` (`uuid`, `date_added`) VALUES ('"+uuid+"', CURRENT_DATE());")
 
 // Check result, do something
 ```
