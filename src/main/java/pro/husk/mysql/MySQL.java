@@ -68,17 +68,22 @@ public class MySQL extends Database {
         return dataSource;
     }
 
-    /**
+    /*
      * Gets current connection, or a new connection from {@link HikariDataSource}
      *
      * @return connection
      * @throws SQLException if cannot get a connection
      */
-    @Override
-    public Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
+ @Override
+public Connection getConnection() throws SQLException {
+    if (connection == null || connection.isClosed()) {
+        try {
             connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            // Handle the exception in a more appropriate way, such as logging or throwing a custom exception
+            throw new RuntimeException("Failed to get a connection from the data source", e);
         }
-        return connection;
     }
+    return connection;
 }
+
